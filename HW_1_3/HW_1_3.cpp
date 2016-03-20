@@ -17,45 +17,44 @@
 #include <iomanip>
 using namespace std;
 
-int judge(int a[], int b[], int n){
-    // 比較 a 和 b的各元素，輸出相同元素的個數。
-    int result = 0;
-    for (int i = 0; i < n; i++){
-        result += (a[i] == b[i]);
-    }
-    return result;
-}
+
 
 int main(){
-    // 4個人說的大小
-    int a[4] = {3,1,0,4};
-    int b[4] = {2,4,3,1};
-    int c[4] = {0,3,0,4};
-    int d[4] = {1,3,4,2};
 
-    int exp[4] = {0};
+    double id[3] = {0}; // 3個人各用多少錢
+    double type[3] = {0};   // 3類發票各多少錢
+    int tempCount = 0;  // 一個人有幾張發票
+    int tempID = 0; // 目前是讀哪個人的發票
+    char tempType = '\0';   // 目前是讀哪種類的發票
+    double tempMoney = 0;   // 目前讀入發票的金額
 
-    // 遍歷各種組合
-    for (int i = 1; i <=4; i++){
-        exp[0] = i;
-        for (int j = 1; j <=4; j++){
-            if (i != j){
-                exp[1] = j;
-                for (int k = 1; k <=4; k++){
-                    if ( (k != i) && (k != j)){
-                        exp[2] = k;
-                        exp[3] = 10-i-j-k;
-                        // 4個人說的話各只有答對一個
-                        if (judge(a, exp, 4) != 1) continue;
-                        if (judge(b, exp, 4) != 1) continue;
-                        if (judge(c, exp, 4) != 1) continue;
-                        if (judge(d, exp, 4) != 1) continue;
-                        // 如果執行到這，表示找到一組答案，打印出來
-                        for (int l = 0; l < 4; l++) cout << exp[l] << endl;
-                    }
-                }
+    // 共有三行
+    for (int i = 0; i<3; i++){
+        cin >> tempID >> tempCount;
+        for (int j = 0; j<tempCount; j++){
+            cin >> tempType >> tempMoney;
+            id[tempID-1] += tempMoney;  //加到那個人的金額
+            switch (tempType){
+                case 'A':   // 加到 A 類發票金額
+                    type[0] += tempMoney;
+                    break;
+                case 'B':   // 加到 B 類發票金額
+                    type[1] += tempMoney;
+                    break;
+                case 'C':   // 加到 C 類發票金額
+                    type[2] += tempMoney;
+                    break;
             }
         }
     }
+
+
+    cout << fixed << setprecision(2) << "1 " << id[0] << endl;
+    cout << fixed << setprecision(2) << "2 " << id[1] << endl;
+    cout << fixed << setprecision(2) << "3 " << id[2] << endl;
+    cout << fixed << setprecision(2) << "A " << type[0] << endl;
+    cout << fixed << setprecision(2) << "B " << type[1] << endl;
+    cout << fixed << setprecision(2) << "C " << type[2] << endl;
+
     return 0;
 }
