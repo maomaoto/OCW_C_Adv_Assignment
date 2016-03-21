@@ -19,6 +19,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="HW_1_6.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
