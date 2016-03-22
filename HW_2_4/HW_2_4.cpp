@@ -15,8 +15,8 @@
 */
 
 #include <iostream>
-#include <iomanip>
-#include <cstdio>   // for getchar()
+//#include <iomanip>
+//#include <cstdio>   // for getchar()
 using namespace std;
 
 // 找右括號
@@ -26,7 +26,7 @@ int findRight(char *ptrIn, char *ptrMark, int pos ){
             // 如果還是找到左括號，再從下一位置開始找右括號
             int match = findRight(ptrIn, ptrMark, i+1);
             if (match != 0) ptrMark[i] = ' ';
-            i = match +1;
+            i= match;
         }
         if (ptrIn[i] == ')'){
             // 如果找到右括號，將mark變成空白，並且回傳位置
@@ -47,7 +47,7 @@ void findLeft(char *ptrIn, char *ptrMark, int pos ){
             // 找到右括號了，將尋找的位置移到右括號的下一個位置
             if (match != 0) {
                 ptrMark[i] = ' ';
-                i = match +1;
+                i = match;
             }
         }
     }
@@ -58,24 +58,26 @@ void findLeft(char *ptrIn, char *ptrMark, int pos ){
 
 int main(){
 
-    char input[101] = {'\0'};
-    char mark[101] = {'\0'};
+    char input[102] = {'\0'};
+    char mark[102] = {'\0'};
     char *ptrIn = input;
     char *ptrMark = mark;
-    while(cin.getline(input, 100)){
-        // add all marks
-        for (int i = 0; input[i] != '\0'; i++){
-            if (input[i] == '(') mark[i] = '$';
-            else if (input[i] == ')') mark[i] = '?';
-            else mark[i] = ' ';
-        }
-        findLeft(ptrIn, ptrMark, 0);
-        // 打印結果
-        cout << input << endl;
-        cout << mark << endl;
-
-
+    cin.getline(input, 101);
+    // add all marks
+    for (int i = 0; input[i] != '\0'; i++){
+        if (input[i] == '(') mark[i] = '$';
+        else if (input[i] == ')') mark[i] = '?';
+        else mark[i] = ' ';
     }
+
+
+    findLeft(ptrIn, ptrMark, 0);
+    // 打印結果
+    cout << input << endl;
+    cout << mark << endl;
+
+
+
 
     return 0;
 }
