@@ -19,63 +19,51 @@
 //#include <cstdio>   // for getchar()
 using namespace std;
 
-// 找右括號
-int findRight(char *ptrIn, char *ptrMark, int pos ){
-    for (int i = pos; ptrIn[i] != '\0'; i++){
-        if (ptrIn[i] == '(' ){
-            // 如果還是找到左括號，再從下一位置開始找右括號
-            int match = findRight(ptrIn, ptrMark, i+1);
-            if (match != 0) ptrMark[i] = ' ';
-            i= match;
-        }
-        if (ptrIn[i] == ')'){
-            // 如果找到右括號，將mark變成空白，並且回傳位置
-            ptrMark[i] = ' ';
-            return i;
-        }
-    }
-    // 找到結尾沒有右括號，回傳0
-    return 0;
-}
-
-// 找左括號
-void findLeft(char *ptrIn, char *ptrMark, int pos ){
-    for (int i = pos; ptrIn[i] != '\0'; i++){
-        if (ptrIn[i] == '(' ){
-            // 如果找到左括號，從下一位置開始找右括號
-            int match = findRight(ptrIn, ptrMark, i+1);
-            // 找到右括號了，將尋找的位置移到右括號的下一個位置
-            if (match != 0) {
-                ptrMark[i] = ' ';
-                i = match;
-            }
-        }
-    }
-}
-
-
-
-
 int main(){
 
     char input[102] = {'\0'};
     char mark[102] = {'\0'};
+
+
+
     char *ptrIn = input;
     char *ptrMark = mark;
-    cin.getline(input, 101);
-    // add all marks
-    for (int i = 0; input[i] != '\0'; i++){
-        if (input[i] == '(') mark[i] = '$';
-        else if (input[i] == ')') mark[i] = '?';
-        else mark[i] = ' ';
+
+    while(cin.getline(input, 101)){
+        int leftPos[102] = {0};
+        int rightPos[102] = {0};
+
+        int leftCount = 0;
+        int rightCount = 0;
+
+        // init mark
+        for (int i = 0; input[i] != '\0'; i++){
+            mark[i] = ' ';
+        }
+
+        for (int i = 0; input[i] != '\0'; i++){
+            if (input[i] == '('){
+                leftPos[leftCount] = i;
+                leftCount += 1;
+            } else if (input[i] == ')'){
+                if (leftCount > 0){
+                    leftPos[leftCount] = 0;
+                    leftCount -= 1;
+                } else {
+                    mark[i] = '?';
+                }
+            }
+        }
+
+        for (int i = 0; i <= leftCount -1; i++){
+            mark[leftPos[i]] = '$';
+        }
+
+
+        // 打印結果
+        cout << input << endl;
+        cout << mark << endl;
     }
-
-
-    findLeft(ptrIn, ptrMark, 0);
-    // 打印結果
-    cout << input << endl;
-    cout << mark << endl;
-
 
 
 
