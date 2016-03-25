@@ -19,14 +19,11 @@
 using namespace std;
 
 
-
-
-
 int main(){
 
     int k = 0, m = 0, n = 0;
-    int mat[100][100] = {{0}};
-    int sum  = 0;
+    int mat[105][105] = {{0}};
+    int sum = 0;
 
     cin >> k;
     for (int i = 0; i<k; i++){
@@ -38,15 +35,24 @@ int main(){
                 cin >> mat[row][col];
             }
         }
+
         for (int col = 0; col < n; col++){
             sum += mat[0][col];     // 第一行
-            sum += mat[m-1][col];   // 最後一行
+            if (m-1 != 0) sum += mat[m-1][col];   // 最後一行
         }
+
         for (int row = 1; row < m-1; row++){
             sum += mat[row][0];     // 第一列
-            sum += mat[row][n-1];   // 最後一列
+            if (n-1 != 0) sum += mat[row][n-1];   // 最後一列
         }
         cout << sum << endl;
+
+        // clear matrix
+        for (int row = 0; row < m; row++){
+            for (int col = 0; col < n; col++){
+                mat[row][col] = 0;
+            }
+        }
 
     }
 
