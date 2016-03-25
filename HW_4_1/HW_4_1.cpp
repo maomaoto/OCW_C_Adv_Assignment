@@ -25,19 +25,20 @@ int main(){
     int person[50] = {0};
     double level[50] = {0};
     int severe = 0; // store number of severe patients
-    int max = 0;
+    double max = 0;
     int maxPos = 0;
 
     // read data
     cin >> m >> a;
     for (int i = 0; i<m; i++){
         cin >> person[i] >> level[i];
-        if (level[i] >= a) severe++;
+        if (level[i] > a) severe++;
     }
 
-    if (severe == 0) cout << "None" << endl; // if no severe patient
+    if (severe == 0) cout << "None." << endl; // if no severe patient
     else {
         for (int i = 0; i < severe; i++){
+            // find most severe
             for (int j = 0; j < m; j++){
                 if (level[j] > max){
                     max = level[j];
